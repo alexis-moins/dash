@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  adminer:
+    image: adminer
+    container_name: todo-adminer
+
+    restart: always
+
+    ports:
+      - 5555:8080
+
+    links:
+      - database:db
+
+  database:
+    image: mysql:8.0
+    container_name: todo-database
+
+    restart: always
+
+    ports:
+      - 3306:3306
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: todo
+
+    volumes:
+      - database-data:/var/lib/mysql
+
+volumes:
+  database-data:

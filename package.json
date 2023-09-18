@@ -6,10 +6,19 @@
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@elysiajs/html": "^0.6.6",
+    "@kitajs/html": "^2.2.2",
+    "@kitajs/ts-html-plugin": "^1.0.1",
+    "@lucia-auth/adapter-prisma": "^3.0.1",
+    "@prisma/client": "5.3.1",
+    "elysia": "^0.6.24",
+    "lucia": "^2.6.0"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "@biomejs/biome": "1.2.2",
+    "bun-types": "latest",
+    "prisma": "^5.3.1",
+    "typed-html": "^3.0.1"
   },
   "module": "src/index.js"
 }
