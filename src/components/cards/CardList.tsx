@@ -6,74 +6,62 @@ interface IProps {
 }
 
 const CardList = ({ cards, deckId }: IProps) => (
-	<section class="m-auto w-fit flex flex-col gap-10">
+	<section class="flex flex-col gap-10">
 		{cards.length > 0 ? (
-			<table class="table-auto border-spacing-2 border-collapse">
+			<table class="table-auto border-spacing-2 border-spacing-x-6 border-collapse">
 				<thead>
 					<tr>
-						<th class="w-24"></th>
-						<th class="w-24"></th>
+						<th></th>
+						<th></th>
 						<th></th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{cards.map((deck) => (
+					{cards.map((card) => (
 						<tr class="hover:bg-slate-100 transition group/row">
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2">
-								{deck.front}
+							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2 pr-4">
+								{card.front}
 							</td>
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default">
-								{deck.back}
+							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pr-4">
+								{card.back}
 							</td>
-							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
-								<a href={`/decks/${deck.id}`} class="w-fit m-auto group/link">
-									<button class="leading-6 text-blue-500 px-2 text-center transition">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											class="stroke-blue-500 h-6 icon icon-tabler icon-tabler-cards"
-											viewBox="0 0 24 24"
-											stroke-width="1.5"
-											fill="none"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M3.604 7.197l7.138 -3.109a.96 .96 0 0 1 1.27 .527l4.924 11.902a1 1 0 0 1 -.514 1.304l-7.137 3.109a.96 .96 0 0 1 -1.271 -.527l-4.924 -11.903a1 1 0 0 1 .514 -1.304z" />
-											<path d="M15 4h1a1 1 0 0 1 1 1v3.5" />
-											<path d="M20 6c.264 .112 .52 .217 .768 .315a1 1 0 0 1 .53 1.311l-2.298 5.374" />
-										</svg>
-									</button>
+							<td class="border-b-2 group-first/row:border-y-2 py-4 pl-6 pr-2">
+								<a href={`/decks/${card.id}`} class="w-fit m-auto group/link">
+									<svg xmlns="http://www.w3.org/2000/svg" class="stroke-slate-500 h-6 icon icon-tabler icon-tabler-edit" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+										<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+										<path d="M16 5l3 3" />
+									</svg>
 								</a>
 							</td>
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
-								<a href={`/decks/${deck.id}`} class="w-fit m-auto">
-									<button class="px-2 text-center">
-										<svg
-											class="stroke-red-500 h-6  icon icon-tabler icon-tabler-trash"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											stroke-width="1.5"
-											fill="none"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M4 7l16 0" />
-											<path d="M10 11l0 6" />
-											<path d="M14 11l0 6" />
-											<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-											<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-										</svg>
-									</button>
-								</a>
+								<button hx-post={`/cards/${card.id}/delete/confirm`} class="w-fit m-auto">
+									<svg
+										class="stroke-red-500 h-6  icon icon-tabler icon-tabler-trash"
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 7l16 0" />
+										<path d="M10 11l0 6" />
+										<path d="M14 11l0 6" />
+										<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+										<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+									</svg>
+								</button>
 							</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
 		) : (
-			<h1>Your decks is empty</h1>
+			<h1 class="text-center">Your decks is empty</h1>
 		)}
 
 		<div class="m-auto flex w-full justify-around">

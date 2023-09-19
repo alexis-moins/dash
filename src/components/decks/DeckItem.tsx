@@ -4,7 +4,7 @@ import CardList from "@components/cards/CardList"
 const DeckItem = ({ id, name, cards }: IDeck) => (
 	<section class="m-auto w-fit flex flex-col gap-4">
 
-		<div class="w-full flex justify-between">
+		<div class="w-full flex justify-between pr-4">
 			<h1 class="font-semibold">{name}</h1>
 
 			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-blue-500 h-6 icon icon-tabler icon-tabler-edit" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">

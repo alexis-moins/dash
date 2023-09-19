@@ -5,7 +5,7 @@ interface IProps {
 }
 
 const DeckList = ({ decks }: IProps) => (
-	<section class="m-auto w-fit flex flex-col gap-4">
+	<section class="m-auto w-fit flex flex-col gap-10">
 		<h1 class="font-semibold">Decks</h1>
 		{decks.length > 0 ? (
 			<table class="table-auto border-spacing-2 border-collapse">

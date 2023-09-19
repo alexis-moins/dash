@@ -5,6 +5,7 @@ import { auth } from "~lucia";
 
 import authRouter from "@routers/auth";
 import decksRouter from "@routers/decks";
+import cardsRouter from "@routers/cards";
 
 import Main from "@components/Main";
 import NavBar from "@components/NavBar";
@@ -14,6 +15,7 @@ const app = new Elysia()
 
 	.use(authRouter)
 	.use(decksRouter)
+	.use(cardsRouter)
 
 	.get("/", async (context) => {
 		const handler = auth.handleRequest(context);
