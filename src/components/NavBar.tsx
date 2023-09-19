@@ -4,12 +4,21 @@ interface IProps {
 
 const NavBar = ({ username }: IProps) => (
 	<nav class="flex justify-between py-4 px-4 mb-24">
-		<a
-			href="/"
-			class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
-		>
-			<h1>Dash</h1>
-		</a>
+		<div class="flex gap-4">
+			<a
+				href="/"
+				class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
+			>
+				<h1>Dash</h1>
+			</a>
+			<a
+				href="/decks"
+				class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
+			>
+				<h1>Decks</h1>
+			</a>
+		</div>
+
 		<div class="flex gap-4">
 			{username ? (
 				<>

@@ -38,19 +38,21 @@ model Key {
 }
 
 model Deck {
-    id       Int    @id @default(autoincrement())
-    name     String
-    owner    User   @relation(fields: [owner_id], references: [id])
-    owner_id String
-    cards    Card[]
+    id         Int      @id @default(autoincrement())
+    name       String
+    owner      User     @relation(fields: [owner_id], references: [id])
+    owner_id   String
+    cards      Card[]
+    created_at DateTime @default(now())
 
     @@unique([name, owner_id])
 }
 
 model Card {
-    id      Int    @id @default(autoincrement())
+    id      Int      @id @default(autoincrement())
     front   String
     back    String
-    deck    Deck   @relation(fields: [deck_id], references: [id])
+    deck    Deck     @relation(fields: [deck_id], references: [id])
     deck_id Int
+    due_at  DateTime @default(now())
 }

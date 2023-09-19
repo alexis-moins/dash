@@ -12,3 +12,9 @@ export const createDeck = async (name: string, ownerId: string) => {
 		data: { name, owner_id: ownerId }
 	});
 };
+
+export const findDeckById = async (id: number) => {
+	return database.deck.findUnique({
+		where: { id }, include: { cards: true }
+	});
+};
