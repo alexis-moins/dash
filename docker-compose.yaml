@@ -1,9 +1,21 @@
 version: "3.9"
 
 services:
+  # server:
+  #   build: .
+  #   container_name: dash-server
+
+  #   restart: always
+
+  #   ports:
+  #     - 3000:3000
+
+  #   depends_on:
+  #       - database
+
   adminer:
     image: adminer
-    container_name: todo-adminer
+    container_name: dash-adminer
 
     restart: always
 
@@ -15,7 +27,7 @@ services:
 
   database:
     image: mysql:8.0
-    container_name: todo-database
+    container_name: dash-database
 
     restart: always
 
@@ -24,7 +36,7 @@ services:
 
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: todo
+      MYSQL_DATABASE: dash
 
     volumes:
       - database-data:/var/lib/mysql

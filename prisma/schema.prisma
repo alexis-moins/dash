@@ -15,6 +15,7 @@ model User {
     username     String
     auth_session Session[]
     key          Key[]
+    Deck         Deck[]
 }
 
 model Session {
@@ -34,4 +35,22 @@ model Key {
     user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
     @@index([user_id])
+}
+
+model Deck {
+    id       Int    @id @default(autoincrement())
+    name     String
+    owner    User   @relation(fields: [owner_id], references: [id])
+    owner_id String
+    cards    Card[]
+
+    @@unique([name, owner_id])
+}
+
+model Card {
+    id      Int    @id @default(autoincrement())
+    front   String
+    back    String
+    deck    Deck   @relation(fields: [deck_id], references: [id])
+    deck_id Int
 }
