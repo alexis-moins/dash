@@ -1,12 +1,8 @@
-interface IProps {
-	error?: string;
-}
-
-const RegisterForm = ({ error }: IProps) => (
+const RegisterForm = () => (
 	<form
+		hx-ext="response-targets"
+		hx-target-4xx="#form-error"
 		hx-post="/register"
-		hx-swap="outerHTML"
-		hx-target-x="this"
 		class="w-64 m-auto flex flex-col gap-10"
 	>
 		<div class="flex flex-col gap-4">
@@ -42,7 +38,7 @@ const RegisterForm = ({ error }: IProps) => (
 		</div>
 
 		<div class="flex flex-col gap-4">
-			<label for="confirm-password">Password</label>
+			<label for="confirm-password">Confirm Password</label>
 			<input
 				id="confirm-password"
 				type="password"
@@ -57,7 +53,7 @@ const RegisterForm = ({ error }: IProps) => (
 			</span>
 		</div>
 
-		{error && <span class="text-pink-500 text-md text-center">{error}</span>}
+		<div id="form-error" class="text-pink-500 text-md text-center"></div>
 
 		<button
 			class="w-fit m-auto border-2 border-blue-500 rounded-md text-blue-500 px-1 hover:bg-blue-500 hover:text-white transition"

@@ -1,5 +1,5 @@
 interface IProps {
-	username?: string;
+	username?: string | null;
 }
 
 const NavBar = ({ username }: IProps) => (

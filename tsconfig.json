@@ -32,7 +32,7 @@
     "paths": {
         "@database/*": ["./src/database/*"],
         "@components/*": ["./src/components/*"],
-        "@routes/*": ["./src/routes/*"],
+        "@routers/*": ["./src/routers/*"],
         "~*": ["./src/*"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */

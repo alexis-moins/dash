@@ -11,17 +11,9 @@ export const auth = lucia({
 	adapter: prisma(database),
 	middleware: elysia(),
 
-	getUserAttributes: (user) => {
-		return {
-			username: user.username,
-		};
-	},
-
-	getSessionAttributes: (session) => {
-		return {
-			userId: session.user.userId,
-		};
-	},
+	getUserAttributes: (user) => ({
+		username: user.username,
+	}),
 });
 
 export type Auth = typeof auth;

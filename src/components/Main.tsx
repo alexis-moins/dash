@@ -1,6 +1,6 @@
-import * as elements from "typed-html";
+import html from "@kitajs/html";
 
-const Main = ({ children }: elements.Children) => `
+const Main = ({ children }: html.PropsWithChildren) => `
 	<!DOCTYPE html>
 	<html>
 	<head>
