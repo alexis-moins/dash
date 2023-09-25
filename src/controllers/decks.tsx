@@ -7,9 +7,10 @@ import { createDeck, findDeckById, findDecksByOwnerId, getNumberOfDue } from "@d
 import Main from "@components/Main";
 import DeckList from "@components/decks/DeckList";
 import NavBar from "@components/NavBar";
-import DeckForm from "@components/decks/DeckForm";
+import DeckAddForm from "@components/decks/DeckAddForm";
 import DeckItem from "@components/decks/DeckItem";
-import CardForm from "@components/cards/CardForm";
+import CardAddForm from "@components/cards/CardAddForm";
+import DeckEditForm from "@components/decks/DeckEditForm";
 
 const plugin = new Elysia({ prefix: "/decks" })
 
@@ -42,12 +43,53 @@ const plugin = new Elysia({ prefix: "/decks" })
 			return (
 				<Main>
 					<NavBar username={session.user.username} due={due} />
-					<DeckForm />
+					<DeckAddForm />
 				</Main>
 			);
 		}
 
 		context.set.redirect = "/login";
+	})
+
+	.get("/:id/edit", async (context) => {
+		const handler = auth.handleRequest(context);
+		const session = await handler.validate();
+
+		if (session) {
+			const deck = await findDeckById(context.params.id)
+			const due = await getNumberOfDue(session.user.userId)
+
+			if (!deck) {
+				return (
+					<Main>
+						<NavBar username={session.user.username} due={due} />
+						<h1>Oh no! This deck does not exist :(</h1>
+					</Main>
+				)
+			}
+
+			if (deck.owner_id === session.user.userId) {
+				return (
+					<Main>
+						<NavBar username={session.user.username} due={due} />
+						<DeckEditForm id={deck.id} name={deck.name} visibility={deck.visibility} />
+					</Main>
+				)
+			}
+
+			return (
+				<Main>
+					<NavBar username={session.user.username} due={due} />
+					<h1>Oh no! You're not allowed to see this deck :(</h1>
+				</Main>
+			)
+		}
+
+		context.set.redirect = "/login";
+	}, {
+		params: t.Object({
+			id: t.Numeric()
+		})
 	})
 
 	.post("/add", async (context) => {
@@ -119,11 +161,12 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 		if (session) {
 			const deck = await findDeckById(context.params.id)
+			const due = await getNumberOfDue(session.user.userId)
 
 			if (!deck) {
 				return (
 					<Main>
-						<NavBar username={session.user.username} />
+						<NavBar username={session.user.username} due={due} />
 						<h1>Oh no! This deck does not exist :(</h1>
 					</Main>
 				)
@@ -132,16 +175,16 @@ const plugin = new Elysia({ prefix: "/decks" })
 			if (deck.owner_id === session.user.userId) {
 				return (
 					<Main>
-						<NavBar username={session.user.username} />
+						<NavBar username={session.user.username} due={due} />
 
-						<CardForm deckId={deck.id} />
+						<CardAddForm deckId={deck.id} />
 					</Main>
 				)
 			}
 
 			return (
 				<Main>
-					<NavBar username={session.user.username} />
+					<NavBar username={session.user.username} due={due} />
 
 					<h1>Oh no! You're not allowed to see this deck :(</h1>
 				</Main>

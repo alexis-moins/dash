@@ -20,7 +20,7 @@ export const findDecksByOwnerId = async (id: string) => {
 	});
 };
 
-export const getNumberOfDue = async (ownerId: string) => {
+export const getNumberOfDue = async (userId: string) => {
 	return database.card.count({
 		where: {
 			AND: [
@@ -31,7 +31,7 @@ export const getNumberOfDue = async (ownerId: string) => {
 				},
 				{
 					deck: {
-						owner_id: ownerId
+						owner_id: userId
 					}
 				}
 			]

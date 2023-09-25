@@ -8,6 +8,12 @@ export const createCard = async (front: string, back: string, deckId: number) =>
 
 export const findCardById = async (id: number) => {
 	return database.card.findUnique({
-		where: { id }, include: {deck: { select: { owner_id: true } }}
+		where: { id }, include: { deck: true }
+	});
+};
+
+export const removeCard = async (cardId: number) => {
+	return database.card.delete({
+		where: { id: cardId } 
 	});
 };

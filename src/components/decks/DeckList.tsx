@@ -5,8 +5,17 @@ interface IProps {
 }
 
 const DeckList = ({ decks }: IProps) => (
-	<section class="m-auto w-fit flex flex-col gap-10">
-		<h1 class="font-semibold">Decks</h1>
+	<section class="m-auto w-fit flex flex-col gap-4">
+
+		<div class="flex flex-row justify-between">
+			<h1 class="font-semibold">Decks</h1>
+			<a href="/decks/add" class="w-fit">
+				<button class="border-2 border-green-500 rounded-md text-green-500 px-2 text-center hover:bg-green-500 hover:text-white transition">
+					Add
+				</button>
+			</a>
+		</div>
+
 		{decks.length > 0 ? (
 			<table class="table-auto border-spacing-2 border-collapse">
 				<thead>
@@ -24,12 +33,14 @@ const DeckList = ({ decks }: IProps) => (
 							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2">
 								{deck.name}
 							</td>
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default">
+							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default text-center">
 								{deck.cards.length} cards
 							</td>
 
-							<td class="border-b-2 text-green-500 group-first/row:border-y-2 py-4 cursor-default">
-								{deck._count.cards} due
+							<td class="border-b-2 text-green-500 group-first/row:border-y-2 py-4 cursor-default text-center">
+								<a class="border-b-[1px] border-green-500" href={deck._count.cards ? `/decks/${deck.id}/review` : ''}>
+									{deck._count.cards} due
+								</a>
 							</td>
 
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
@@ -66,11 +77,6 @@ const DeckList = ({ decks }: IProps) => (
 		) : (
 			<h1>Your collection of decks is empty</h1>
 		)}
-		<a href="/decks/add" class="w-fit m-auto">
-			<button class="border-2 border-green-500 rounded-md text-green-500 px-2 text-center hover:bg-green-500 hover:text-white transition">
-				Add
-			</button>
-		</a>
 	</section>
 );
 

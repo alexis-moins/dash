@@ -8,9 +8,10 @@ const NavBar = ({ due, username }: IProps) => (
 		<div class="flex gap-4">
 			<a
 				href="/decks"
-				class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
+				class="group transition border-b-2 hover:text-blue-500 hover:border-blue-500"
+				
 			>
-				<h1>Decks{due && <> (<span class="text-green-500">{due}</span>)</>}</h1>
+				<h1>Decks{due && <> (<span class="text-green-500 group-hover:text-blue-500">{due}</span>)</>}</h1>
 			</a>
 		</div>
 
