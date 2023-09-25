@@ -32,7 +32,7 @@
     "paths": {
         "@database/*": ["./src/database/*"],
         "@components/*": ["./src/components/*"],
-        "@routers/*": ["./src/routers/*"],
+        "@controllers/*": ["./src/controllers/*"],
         "#types/*": ["./src/types/*"],
         "~*": ["./src/*"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
