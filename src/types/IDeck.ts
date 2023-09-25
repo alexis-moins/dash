@@ -5,3 +5,5 @@ export default interface IDeck {
 	name: string;
 	cards: ICard[];
 }
+
+export type IDeckWithDue = IDeck & { _count: { cards: number } }

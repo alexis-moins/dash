@@ -3,9 +3,41 @@ import { database } from "~lucia";
 export const findDecksByOwnerId = async (id: string) => {
 	return database.deck.findMany({
 		where: { owner_id: id },
-		include: { cards: true },
+		include: {
+			cards: true,
+			_count: {
+				select: {
+					cards: {
+						where: {
+							due_at: {
+								lte: new Date()
+							}
+						}
+					}
+				}
+			}
+		},
 	});
 };
+
+export const getNumberOfDue = async (ownerId: string) => {
+	return database.card.count({
+		where: {
+			AND: [
+				{
+					due_at: {
+						lte: new Date()
+					}
+				},
+				{
+					deck: {
+						owner_id: ownerId
+					}
+				}
+			]
+		}
+	})
+}
 
 export const createDeck = async (name: string, ownerId: string) => {
 	return database.deck.create({

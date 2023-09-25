@@ -1,21 +1,16 @@
 interface IProps {
-	username?: string | null;
+	due?: number
+	username?: string;
 }
 
-const NavBar = ({ username }: IProps) => (
+const NavBar = ({ due, username }: IProps) => (
 	<nav class="flex justify-between py-4 px-4 mb-24">
 		<div class="flex gap-4">
-			<a
-				href="/"
-				class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
-			>
-				<h1>Dash</h1>
-			</a>
 			<a
 				href="/decks"
 				class="transition border-b-2 hover:text-blue-500 hover:border-blue-500"
 			>
-				<h1>Decks</h1>
+				<h1>Decks{due && <> (<span class="text-green-500">{due}</span>)</>}</h1>
 			</a>
 		</div>
 

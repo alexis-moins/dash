@@ -1,7 +1,7 @@
-import IDeck from "#types/IDeck";
+import { IDeckWithDue } from "#types/IDeck";
 
 interface IProps {
-	decks: IDeck[];
+	decks: IDeckWithDue[];
 }
 
 const DeckList = ({ decks }: IProps) => (
@@ -11,6 +11,7 @@ const DeckList = ({ decks }: IProps) => (
 			<table class="table-auto border-spacing-2 border-collapse">
 				<thead>
 					<tr>
+						<th class="w-24"></th>
 						<th class="w-24"></th>
 						<th class="w-24"></th>
 						<th></th>
@@ -26,6 +27,11 @@ const DeckList = ({ decks }: IProps) => (
 							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default">
 								{deck.cards.length} cards
 							</td>
+
+							<td class="border-b-2 text-green-500 group-first/row:border-y-2 py-4 cursor-default">
+								{deck._count.cards} due
+							</td>
+
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
 								<a href={`/decks/${deck.id}`} class="w-fit m-auto group/link">
 									<button class="leading-6 text-blue-500 px-2 text-center transition">
@@ -38,6 +44,7 @@ const DeckList = ({ decks }: IProps) => (
 									</button>
 								</a>
 							</td>
+
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
 								<a href={`/decks/${deck.id}`} class="w-fit m-auto">
 									<button class="px-2 text-center">

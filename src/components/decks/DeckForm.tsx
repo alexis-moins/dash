@@ -17,6 +17,7 @@ const DeckForm = () => (
 				autocomplete="off"
 				maxlength="24"
 				pattern="[a-zA-Z0-9 #-]{1,24}"
+				placeholder="English 101"
 			/>
 			<span class="hidden peer-invalid:block text-pink-500 text-sm">
 				Your deck name must contain between 1 and 24 characters / digits.

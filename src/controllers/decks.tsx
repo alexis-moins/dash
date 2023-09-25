@@ -1,7 +1,8 @@
 import { Elysia, t } from "elysia";
 import { auth } from "~lucia";
 
-import { createDeck, findDeckById, findDecksByOwnerId } from "@database/decks";
+import { createCard } from "@database/cards";
+import { createDeck, findDeckById, findDecksByOwnerId, getNumberOfDue } from "@database/decks";
 
 import Main from "@components/Main";
 import DeckList from "@components/decks/DeckList";
@@ -9,7 +10,6 @@ import NavBar from "@components/NavBar";
 import DeckForm from "@components/decks/DeckForm";
 import DeckItem from "@components/decks/DeckItem";
 import CardForm from "@components/cards/CardForm";
-import { createCard } from "@database/cards";
 
 const plugin = new Elysia({ prefix: "/decks" })
 
@@ -19,10 +19,11 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 		if (session) {
 			const decks = await findDecksByOwnerId(session.user.userId);
+			const due = decks.map((deck) => deck._count.cards).reduce((a, b) => a + b)
 
 			return (
 				<Main>
-					<NavBar username={session.user.username} />
+					<NavBar username={session.user.username} due={due} />
 					<DeckList decks={decks} />
 				</Main>
 			);
@@ -36,10 +37,11 @@ const plugin = new Elysia({ prefix: "/decks" })
 		const session = await handler.validate();
 
 		if (session) {
+			const due = await getNumberOfDue(session.user.userId)
 
 			return (
 				<Main>
-					<NavBar username={session.user.username} />
+					<NavBar username={session.user.username} due={due} />
 					<DeckForm />
 				</Main>
 			);
@@ -76,11 +78,12 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 		if (session) {
 			const deck = await findDeckById(context.params.id)
+			const due = await getNumberOfDue(session.user.userId)
 
 			if (!deck) {
 				return (
 					<Main>
-						<NavBar username={session.user.username} />
+						<NavBar username={session.user.username} due={due} />
 						<h1>Oh no! This deck does not exist :(</h1>
 					</Main>
 				)
@@ -89,7 +92,7 @@ const plugin = new Elysia({ prefix: "/decks" })
 			if (deck.owner_id === session.user.userId) {
 				return (
 					<Main>
-						<NavBar username={session.user.username} />
+						<NavBar username={session.user.username} due={due} />
 						<DeckItem id={deck.id} name={deck.name} cards={deck.cards} />
 					</Main>
 				)
@@ -97,13 +100,13 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 			return (
 				<Main>
-					<NavBar username={session.user.username} />
-
+					<NavBar username={session.user.username} due={due} />
 					<h1>Oh no! You're not allowed to see this deck :(</h1>
 				</Main>
-
 			)
 		}
+
+		context.set.redirect = '/login'
 	}, {
 		params: t.Object({
 			id: t.Numeric()
