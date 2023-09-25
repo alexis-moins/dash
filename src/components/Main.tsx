@@ -13,7 +13,7 @@ const Main = ({ children }: html.PropsWithChildren) => (
 			<script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
 		</head>
 
-		<body>{children}</body>
+		<body class="h-screen relative">{children}</body>
 	</html>
 );
 

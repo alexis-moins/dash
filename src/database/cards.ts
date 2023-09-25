@@ -14,6 +14,31 @@ export const findCardById = async (id: number) => {
 
 export const removeCard = async (cardId: number) => {
 	return database.card.delete({
-		where: { id: cardId } 
+		where: { id: cardId }
+	});
+};
+
+export const getNumberOfDue = async (userId: string) => {
+	return database.card.count({
+		where: {
+			AND: [
+				{
+					due_at: {
+						lte: new Date()
+					}
+				},
+				{
+					deck: {
+						owner_id: userId
+					}
+				}
+			]
+		}
+	})
+}
+
+export const findDueCardsByDeckId = async (deckId: number) => {
+	return database.card.findMany({
+		where: { deck_id: deckId }, include: { deck: true }
 	});
 };

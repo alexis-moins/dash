@@ -20,25 +20,6 @@ export const findDecksByOwnerId = async (id: string) => {
 	});
 };
 
-export const getNumberOfDue = async (userId: string) => {
-	return database.card.count({
-		where: {
-			AND: [
-				{
-					due_at: {
-						lte: new Date()
-					}
-				},
-				{
-					deck: {
-						owner_id: userId
-					}
-				}
-			]
-		}
-	})
-}
-
 export const createDeck = async (name: string, ownerId: string) => {
 	return database.deck.create({
 		data: { name, owner_id: ownerId }
