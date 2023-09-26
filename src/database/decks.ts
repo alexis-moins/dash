@@ -10,24 +10,25 @@ export const findDecksByOwnerId = async (id: string) => {
 					cards: {
 						where: {
 							due_at: {
-								lte: new Date()
-							}
-						}
-					}
-				}
-			}
+								lte: new Date(),
+							},
+						},
+					},
+				},
+			},
 		},
 	});
 };
 
 export const createDeck = async (name: string, ownerId: string) => {
 	return database.deck.create({
-		data: { name, owner_id: ownerId }
+		data: { name, owner_id: ownerId },
 	});
 };
 
 export const findDeckById = async (id: number) => {
 	return database.deck.findUnique({
-		where: { id }, include: { cards: true }
+		where: { id },
+		include: { cards: true },
 	});
 };

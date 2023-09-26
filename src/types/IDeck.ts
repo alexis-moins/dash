@@ -6,4 +6,4 @@ export default interface IDeck {
 	cards: ICard[];
 }
 
-export type IDeckWithDue = IDeck & { _count: { cards: number } }
+export type IDeckWithDue = IDeck & { _count: { cards: number } };

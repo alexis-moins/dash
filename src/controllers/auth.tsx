@@ -7,6 +7,7 @@ import LoginForm from "@components/auth/LoginForm";
 import RegisterForm from "@components/auth/RegisterForm";
 
 const plugin = new Elysia()
+
 	.get("/login", async (context) => {
 		const handler = auth.handleRequest(context);
 		const session = await handler.validate();
@@ -39,7 +40,7 @@ const plugin = new Elysia()
 			const handler = auth.handleRequest(context);
 			handler.setSession(session);
 
-			context.set.redirect = "/";
+			context.set.headers['HX-Redirect'] = "/";
 		},
 		{
 			body: t.Object({

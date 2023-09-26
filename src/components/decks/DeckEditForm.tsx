@@ -1,9 +1,9 @@
 import { Visibility } from "@prisma/client";
 
 interface IProps {
-	id: number
-	name: string
-	visibility: Visibility
+	id: number;
+	name: string;
+	visibility: Visibility;
 }
 
 const DeckEditForm = ({ id, name, visibility }: IProps) => (
@@ -11,7 +11,6 @@ const DeckEditForm = ({ id, name, visibility }: IProps) => (
 		hx-ext="response-targets"
 		hx-target-4xx="#form-error"
 		hx-target-5xx="#form-error"
-
 		hx-put={`/decks/${id}`}
 		class="w-64 m-auto flex flex-col gap-10"
 	>
@@ -38,12 +37,24 @@ const DeckEditForm = ({ id, name, visibility }: IProps) => (
 
 			<div class="flex justify-around">
 				<div class="flex gap-2">
-					<input type="radio" id="visibility-private" name="visibility" value="private" checked={visibility === 'PRIVATE'} />
+					<input
+						type="radio"
+						id="visibility-private"
+						name="visibility"
+						value="private"
+						checked={visibility === "PRIVATE"}
+					/>
 					<label for="visibility-private">Private</label>
 				</div>
 
 				<div class="flex gap-2">
-					<input type="radio" id="visibility-public" name="visibility" value="public" checked={visibility === 'PUBLIC'} />
+					<input
+						type="radio"
+						id="visibility-public"
+						name="visibility"
+						value="public"
+						checked={visibility === "PUBLIC"}
+					/>
 					<label for="visibility-public">Public</label>
 				</div>
 			</div>
@@ -52,8 +63,13 @@ const DeckEditForm = ({ id, name, visibility }: IProps) => (
 		<div id="form-error" class="text-pink-500 text-md text-center"></div>
 
 		<div class="m-auto flex w-full justify-center gap-6">
-			<a href={`/decks/${id}`}
-				class="w-fit border-2 border-stone-500 rounded-md text-stone-500 px-1 hover:bg-stone-500 hover:text-white transition" type="button">Cancel</a>
+			<a
+				href={`/decks/${id}`}
+				class="w-fit border-2 border-stone-500 rounded-md text-stone-500 px-1 hover:bg-stone-500 hover:text-white transition"
+				type="button"
+			>
+				Cancel
+			</a>
 
 			<button
 				class="w-fit border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
@@ -69,7 +85,6 @@ const DeckEditForm = ({ id, name, visibility }: IProps) => (
 		>
 			Save
 		</button>
-
 	</form>
 );
 

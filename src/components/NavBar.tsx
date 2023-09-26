@@ -1,5 +1,5 @@
 interface IProps {
-	due?: number
+	due?: number;
 	username?: string;
 }
 
@@ -9,9 +9,20 @@ const NavBar = ({ due, username }: IProps) => (
 			<a
 				href="/decks"
 				class="group transition border-b-2 hover:text-blue-500 hover:border-blue-500"
-				
 			>
-				<h1>Decks{due && <> (<span class="text-green-500 group-hover:text-blue-500">{due}</span>)</>}</h1>
+				<h1>
+					Decks
+					{due && (
+						<>
+							{" "}
+							(
+							<span class="text-green-500 group-hover:text-blue-500">
+								{due}
+							</span>
+							)
+						</>
+					)}
+				</h1>
 			</a>
 		</div>
 

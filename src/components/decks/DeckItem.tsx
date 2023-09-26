@@ -1,9 +1,8 @@
-import IDeck from "#types/IDeck"
-import CardList from "@components/cards/CardList"
+import IDeck from "#types/IDeck";
+import CardList from "@components/cards/CardList";
 
 const DeckItem = ({ id, name, cards }: IDeck) => (
 	<section id="deck-item" class="m-auto w-fit flex flex-col gap-4">
-
 		<div class="w-full flex justify-between pr-2">
 			<h1 class="font-semibold">{name}</h1>
 
@@ -17,6 +16,6 @@ const DeckItem = ({ id, name, cards }: IDeck) => (
 
 		<CardList deckId={id} cards={cards} />
 	</section>
-)
+);
 
-export default DeckItem
+export default DeckItem;
