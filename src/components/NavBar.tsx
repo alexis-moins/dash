@@ -12,7 +12,7 @@ const NavBar = ({ due, username }: IProps) => (
 			>
 				<h1>
 					Decks
-					{due && (
+					{due ? (
 						<>
 							{" "}
 							(
@@ -21,7 +21,7 @@ const NavBar = ({ due, username }: IProps) => (
 							</span>
 							)
 						</>
-					)}
+					) : null}
 				</h1>
 			</a>
 		</div>

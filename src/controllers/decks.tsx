@@ -2,13 +2,7 @@ import { Elysia, t } from "elysia";
 import { auth } from "~lucia";
 
 import { createDeck, findDeckById, findDecksByOwnerId } from "@database/decks";
-
-import {
-	createCard,
-	getNumberOfDue,
-	findDueCardsByDeckId,
-	findCardById,
-} from "@database/cards";
+import { createCard, getNumberOfDue, findDueCardsByDeckId, } from "@database/cards";
 
 import isAuthenticated from "@plugins/isAuthenticated";
 
@@ -21,14 +15,13 @@ import CardAddForm from "@components/cards/CardAddForm";
 import DeckEditForm from "@components/decks/DeckEditForm";
 import CardReview from "@components/cards/CardReview";
 import Layout from "@components/Layout";
-import CardReviewBack from "@components/cards/CardReviewBack";
 
 const plugin = new Elysia({ prefix: "/decks" })
 	.use(isAuthenticated)
 
 	.get("/", async ({ session }) => {
 		const decks = await findDecksByOwnerId(session.user.userId);
-		const due = decks.map((deck) => deck._count.cards).reduce((a, b) => a + b);
+		const due = await getNumberOfDue(session.user.userId)
 
 		return (
 			<Layout username={session.user.username} due={due}>
@@ -255,6 +248,8 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 			if (deck.owner_id === session.user.userId) {
 				const dueCards = await findDueCardsByDeckId(deck.id, 1);
+
+				console.log(dueCards)
 
 				if (dueCards.length === 0) {
 					return (

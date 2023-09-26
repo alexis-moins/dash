@@ -1,5 +1,9 @@
 import { database } from "~lucia";
 
+import { DateTime } from "luxon"
+
+import { Card, Grade } from "@prisma/client";
+
 export const createCard = async (
 	front: string,
 	back: string,
@@ -44,21 +48,40 @@ export const getNumberOfDue = async (userId: string) => {
 
 export const findDueCardsByDeckId = async (deckId: number, take?: number) => {
 	return database.card.findMany({
-		where: { deck_id: deckId },
+		where: {
+			deck_id: deckId,
+			due_at: {
+				lte: new Date()
+			}
+		},
 		include: { deck: true },
 		take: take
 	});
 };
 
-const RETENTION_TABLE = [
-	{ grade: '' }
-]
+export const reviewCard = async (card: Card, grade: Grade) => {
+	const G = await database.gradeRetention.findUnique({
+		where: { name: grade }
+	})
 
-export const reviewCard = async (cardId: number, grade: string) => {
+	if (!G) {
+		throw new Error("zkjznekjcz")
+	}
+
+
+	const retentions = await database.retentionDuration.findMany()
+	const newRetentionLevel = Math.min(retentions.length - 1, Math.max(card.retention_level + G.retention_delta, 0))
+
+	console.log()
+	console.log(G)
+	console.log(retentions)
+
+	const newDueDate = DateTime.fromJSDate(card.due_at).plus({ minutes: retentions[newRetentionLevel].minutes_delta }).toJSDate()
+
 	return await database.card.update({
-		where: { id: cardId }, data: {
-			retention_level: 1,
-			due_at: 
+		where: { id: card.id }, data: {
+			retention_level: newRetentionLevel,
+			due_at: newDueDate
 		}
 	})
 }

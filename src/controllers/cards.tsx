@@ -1,7 +1,7 @@
 import { Elysia, t } from "elysia";
 
 import isAuthenticated from "@plugins/isAuthenticated";
-import { findCardById, removeCard } from "@database/cards";
+import { findCardById, removeCard, reviewCard } from "@database/cards";
 
 const plugin = new Elysia({ prefix: "/cards" })
 	.use(isAuthenticated)
@@ -111,21 +111,24 @@ const plugin = new Elysia({ prefix: "/cards" })
 					</button>
 
 					<a
-						// href={`/decks/${deckId}/edit`}
+						hx-post={`/cards/${card.id}/review`}
+						hx-vals='{"grade": "HARD"}'
 						class="w-fit border-2 border-blue-500 rounded-md text-blue-500 px-1 hover:bg-blue-500 hover:text-white transition"
 					>
 						Hard
 					</a>
 
 					<a
-						// href={`/decks/${deckId}/edit`}
+						hx-post={`/cards/${card.id}/review`}
+						hx-vals='{"grade": "GOOD"}'
 						class="w-fit border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
 					>
 						Good
 					</a>
 
 					<a
-						// href={`/decks/${deckId}/edit`}
+						hx-post={`/cards/${card.id}/review`}
+						hx-vals='{"grade": "EASY"}'
 						class="w-fit border-2 border-purple-500 rounded-md text-purple-500 px-1 hover:bg-purple-500 hover:text-white transition"
 					>
 						Easy
@@ -146,12 +149,12 @@ const plugin = new Elysia({ prefix: "/cards" })
 			return
 		}
 
-		await reviewCard(card.id, body.grade)
+		await reviewCard(card, body.grade)
 
 		set.headers['HX-Redirect'] = `/decks/${card.deck.id}/review`
 	}, {
 		body: t.Object({
-			grade: t.Union([t.Literal('NOTHING'), t.Literal('SOMETHING')])
+			grade: t.Union([t.Literal('NOTHING'), t.Literal('SOMETHING'), t.Literal('HARD'), t.Literal('GOOD'), t.Literal('EASY')])
 		}),
 
 		params: t.Object({

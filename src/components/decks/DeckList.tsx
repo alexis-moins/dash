@@ -19,9 +19,9 @@ const DeckList = ({ decks }: IProps) => (
 			<table class="table-auto border-spacing-2 border-collapse">
 				<thead>
 					<tr>
-						<th class="w-24"></th>
-						<th class="w-24"></th>
-						<th class="w-24"></th>
+						<th></th>
+						<th></th>
+						<th></th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -29,17 +29,17 @@ const DeckList = ({ decks }: IProps) => (
 				<tbody>
 					{decks.map((deck) => (
 						<tr class="hover:bg-slate-100 transition group/row">
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2">
+							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2 pr-6">
 								{deck.name}
 							</td>
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default text-center">
+							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default text-center pr-8">
 								{deck.cards.length} cards
 							</td>
 
-							<td class="border-b-2 text-green-500 group-first/row:border-y-2 py-4 cursor-default text-center">
+							<td class="border-b-2 text-green-500 group-first/row:border-y-2 py-4 cursor-default text-center pr-4">
 								<a
 									class="border-b-[1px] border-green-500"
-									href={deck._count.cards ? `/decks/${deck.id}/review` : ""}
+									href={`/decks/${deck.id}/review`}
 								>
 									{deck._count.cards} due
 								</a>

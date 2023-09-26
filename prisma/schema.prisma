@@ -49,6 +49,11 @@ model Deck {
     @@unique([name, owner_id])
 }
 
+enum Visibility {
+    PRIVATE
+    PUBLIC
+}
+
 model Card {
     id              Int      @id @default(autoincrement())
     front           String
@@ -59,7 +64,21 @@ model Card {
     retention_level Int      @default(0)
 }
 
-enum Visibility {
-    PRIVATE
-    PUBLIC
+model GradeRetention {
+    id              Int   @id @default(autoincrement())
+    name            Grade @unique
+    retention_delta Int
+}
+
+enum Grade {
+    NOTHING
+    SOMETHING
+    HARD
+    GOOD
+    EASY
+}
+
+model RetentionDuration {
+    level         Int @id
+    minutes_delta Int
 }
