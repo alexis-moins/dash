@@ -17,15 +17,6 @@ const DeckList = ({ decks }: IProps) => (
 
 		{decks.length > 0 ? (
 			<table class="table-auto border-spacing-2 border-collapse">
-				<thead>
-					<tr>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
 				<tbody>
 					{decks.map((deck) => (
 						<tr class="hover:bg-slate-100 transition group/row">

@@ -6,31 +6,22 @@ interface IProps {
 }
 
 const CardList = ({ cards, deckId }: IProps) => (
-	<section class="flex flex-col gap-10">
+	<section class="flex flex-col gap-10 ">
 		{cards.length > 0 ? (
-			<table class="table-auto border-spacing-2 border-spacing-x-6 border-collapse">
-				<thead>
-					<tr>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
+			<table class="table-fixed w-fit border-t-2 border-collapse">
+				<tbody class="cursor-default">
 					{cards.map((card) => (
-						<tr class="hover:bg-slate-100 transition group/row">
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pl-2 pr-4">
+						<tr class="border-b-2 flex justify-between gap-4 hover:bg-slate-100 transition">
+							<td class="pl-2 py-4 w-[40%] truncate">
 								{card.front}
 							</td>
-							<td class="border-b-2 group-first/row:border-y-2 py-4 cursor-default pr-4">
+
+							<td class="pl-2 py-4 w-[40%] truncate">
 								{card.back}
 							</td>
 
-							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
-								<button
-									class="w-fit m-auto"
-								>
+							<td class="pr-2 py-4 flex gap-4">
+								<button>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										class="stroke-blue-500 h-6 icon icon-tabler icon-tabler-edit"
@@ -46,13 +37,9 @@ const CardList = ({ cards, deckId }: IProps) => (
 										<path d="M16 5l3 3" />
 									</svg>
 								</button>
-							</td>
-
-							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
 								<button
 									hx-delete={`/cards/${card.id}/confirm`}
 									hx-target="#deck-item"
-									class="w-fit m-auto"
 								>
 									<svg
 										class="stroke-red-500 h-6  icon icon-tabler icon-tabler-trash"

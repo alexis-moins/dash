@@ -2,7 +2,7 @@ import IDeck from "#types/IDeck";
 import CardList from "@components/cards/CardList";
 
 const DeckItem = ({ id, name, cards }: IDeck) => (
-	<section id="deck-item" class="m-auto w-fit flex flex-col gap-4">
+	<section id="deck-item" class="flex flex-col gap-4 m-auto w-fit max-w-3xl">
 		<div class="w-full flex justify-between pr-2">
 			<h1 class="font-semibold">{name}</h1>
 

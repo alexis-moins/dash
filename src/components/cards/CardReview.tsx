@@ -9,7 +9,7 @@ interface IProps {
 const CardReview = ({ id, front, deckName, deckId }: IProps) => (
 	<div class="flex flex-col jutify-center items-center">
 		<a href={`/decks/${deckId}`}>
-			<h4 class="text-stone-400">{deckName}</h4>
+			<h4 class="text-stone-400 border-b-2 border-stone-200 mb-2 hover:border-stone-400">{deckName}</h4>
 		</a>
 		<h1 class="text-xl">{front}</h1>
 
