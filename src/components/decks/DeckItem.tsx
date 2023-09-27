@@ -1,8 +1,15 @@
-import IDeck from "#types/IDeck";
+import ICard from "#types/ICard";
 import CardList from "@components/cards/CardList";
 
-const DeckItem = ({ id, name, cards }: IDeck) => (
-	<section id="deck-item" class="flex flex-col gap-4 m-auto w-fit max-w-3xl">
+interface IProps {
+	id: number
+	name: string
+	cards: ICard[]
+	page: number
+}
+
+const DeckItem = ({ id, name, cards, page }: IProps) => (
+	<section id="deck-item" class="flex flex-col gap-4 m-auto w-[48rem]">
 		<div class="w-full flex justify-between pr-2">
 			<h1 class="font-semibold">{name}</h1>
 
@@ -15,6 +22,8 @@ const DeckItem = ({ id, name, cards }: IDeck) => (
 		</div>
 
 		<CardList deckId={id} cards={cards} />
+
+		{page > 1 ? <a href={`/decks/${id}?page=${page - 1}`}>&larr;</a> : null}
 	</section>
 );
 

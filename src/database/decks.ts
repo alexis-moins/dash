@@ -26,9 +26,14 @@ export const createDeck = async (name: string, ownerId: string) => {
 	});
 };
 
-export const findDeckById = async (id: number) => {
+const CARDS_PER_PAGE = 8
+
+export const findDeckById = async (id: number, page?: number) => {
+	const take = CARDS_PER_PAGE
+	const skip = page ? (page - 1) * take : 0
+
 	return database.deck.findUnique({
 		where: { id },
-		include: { cards: true },
+		include: { cards: { take, skip } },
 	});
 };

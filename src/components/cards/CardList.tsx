@@ -8,19 +8,19 @@ interface IProps {
 const CardList = ({ cards, deckId }: IProps) => (
 	<section class="flex flex-col gap-10 ">
 		{cards.length > 0 ? (
-			<table class="table-fixed w-fit border-t-2 border-collapse">
+			<table class="table-fixed w-full border-t-2 border-collapse">
 				<tbody class="cursor-default">
 					{cards.map((card) => (
 						<tr class="border-b-2 flex justify-between gap-4 hover:bg-slate-100 transition">
-							<td class="pl-2 py-4 w-[40%] truncate">
+							<td class="pl-2 py-4 w-[30%] truncate">
 								{card.front}
 							</td>
 
-							<td class="pl-2 py-4 w-[40%] truncate">
+							<td class="py-4 w-[30%] text-center truncate">
 								{card.back}
 							</td>
 
-							<td class="pr-2 py-4 flex gap-4">
+							<td class="pr-2 py-4 w-[30%] flex justify-end gap-4">
 								<button>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -70,14 +70,14 @@ const CardList = ({ cards, deckId }: IProps) => (
 		<div class="m-auto flex w-full justify-center gap-6">
 			<a
 				href="/decks"
-				class="w-fit border-2 border-stone-500 rounded-md text-stone-500 px-1 hover:bg-stone-500 hover:text-white transition"
+				class="w-12 text-center border-2 border-stone-500 rounded-md text-stone-500 px-1 hover:bg-stone-500 hover:text-white transition"
 			>
 				Back
 			</a>
 
 			<a
 				href={`/decks/${deckId}/edit`}
-				class="w-fit border-2 border-blue-500 rounded-md text-blue-500 px-1 hover:bg-blue-500 hover:text-white transition"
+				class="w-12 text-center border-2 border-blue-500 rounded-md text-blue-500 px-1 hover:bg-blue-500 hover:text-white transition"
 			>
 				Edit
 			</a>

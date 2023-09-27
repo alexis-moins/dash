@@ -103,8 +103,8 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 	.get(
 		"/:id",
-		async ({ session, params }) => {
-			const deck = await findDeckById(params.id);
+		async ({ session, params, query }) => {
+			const deck = await findDeckById(params.id, query.page);
 			const due = await getNumberOfDue(session.user.userId);
 
 			if (!deck) {
@@ -120,7 +120,7 @@ const plugin = new Elysia({ prefix: "/decks" })
 				return (
 					<Main>
 						<NavBar username={session.user.username} due={due} />
-						<DeckItem id={deck.id} name={deck.name} cards={deck.cards} />
+						<DeckItem id={deck.id} name={deck.name} cards={deck.cards} page={query.page ?? 1} />
 					</Main>
 				);
 			}
@@ -136,6 +136,10 @@ const plugin = new Elysia({ prefix: "/decks" })
 			params: t.Object({
 				id: t.Numeric(),
 			}),
+
+			query: t.Object({
+				page: t.Optional(t.Numeric({ minimum: 1 }))
+			})
 		},
 	)
 
@@ -160,11 +164,9 @@ const plugin = new Elysia({ prefix: "/decks" })
 
 				if (deck.owner_id === session.user.userId) {
 					return (
-						<Main>
-							<NavBar username={session.user.username} due={due} />
-
+						<Layout username={session.user.username} due={due}>
 							<CardAddForm deckId={deck.id} />
-						</Main>
+						</Layout>
 					);
 				}
 
@@ -205,16 +207,32 @@ const plugin = new Elysia({ prefix: "/decks" })
 					);
 				}
 
-				await createCard(context.body.front, context.body.back, deck.id);
+				const card = await createCard(context.body.front, context.body.back, deck.id);
 
 				return (
 					<>
-						<p>
-							Your card was added to{" "}
-							<span class="text-blue-500">{deck.name}</span>
+						<h1 class="font-semibold text-center">
+							Congratulations! You did it!
+						</h1>
+						<p class="font-normal">Your card was succesfully added to{" "}
+							<a href={`/decks/${card.deck.id}`} class="text-blue-500 border-b-2 border-blue-200 hover:border-blue-500">{card.deck.name}</a>.
 						</p>
-						<a href={`/decks/${deck.id}`}>Back to the deck</a>
-						<a href={`/decks/${deck.id}/add`}>Keep adding cards</a>
+
+						<div class="m-auto mt-4 flex w-full justify-center gap-6">
+							<a
+								href={`/decks/${card.deck.id}`}
+								class="border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
+							>
+								To the deck
+							</a>
+
+							<a
+								href={`/decks/${deck.id}/add`}
+								class="border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
+							>
+								Keep adding
+							</a>
+						</div>
 					</>
 				);
 			}
@@ -254,12 +272,21 @@ const plugin = new Elysia({ prefix: "/decks" })
 				if (dueCards.length === 0) {
 					return (
 						<Layout username={session.user.username} due={due}>
-							<h1>Congratulations!</h1>
-
-							<p>
-								You reviewed all due cards from{" "}
-								<span class="text-blue-500">{deck.name}</span> for today.
+							<h1 class="font-semibold text-center">
+								Nice job!
+							</h1>
+							<p class="font-normal">You reviewed all due cards from{" "}
+								<a href={`/decks/${deck.id}`} class="text-blue-500 border-b-2 border-blue-200 hover:border-blue-500">{deck.name}</a>{" "}for today.
 							</p>
+
+							<div class="m-auto mt-4 flex w-full justify-center gap-6">
+								<a
+									href={`/decks`}
+									class="border-2 border-stone-500 rounded-md text-stone-500 px-1 hover:bg-stone-500 hover:text-white transition"
+								>
+									Take me back
+								</a>
+							</div>
 						</Layout>
 					);
 				}

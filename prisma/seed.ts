@@ -1,9 +1,8 @@
 import { database } from "~lucia"
 
-await database.gradeRetention.createMany({
+await database.grade.createMany({
 	data: [
-		{ name: "NOTHING", retention_delta: -3 },
-		{ name: "SOMETHING", retention_delta: -2 },
+		{ name: "NOTHING", retention_delta: -2 },
 		{ name: "HARD", retention_delta: -1 },
 		{ name: "GOOD", retention_delta: 1 },
 		{ name: "EASY", retention_delta: 2 },
@@ -12,7 +11,7 @@ await database.gradeRetention.createMany({
 	skipDuplicates: true
 })
 
-await database.retentionDuration.createMany({
+await database.retentionLevel.createMany({
 	data: [
 		{ level: 0, minutes_delta: 0 },
 		{ level: 1, minutes_delta: 15 },

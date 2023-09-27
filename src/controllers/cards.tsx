@@ -2,6 +2,7 @@ import { Elysia, t } from "elysia";
 
 import isAuthenticated from "@plugins/isAuthenticated";
 import { findCardById, removeCard, reviewCard } from "@database/cards";
+import CardReveal from "@components/cards/CardReveal";
 
 const plugin = new Elysia({ prefix: "/cards" })
 	.use(isAuthenticated)
@@ -25,12 +26,12 @@ const plugin = new Elysia({ prefix: "/cards" })
 						You're about to remove a card from{" "}
 						<a href={`/decks/${card.deck.id}`} class="text-blue-500 border-b-2 border-blue-200 hover:border-blue-500">{card.deck.name}</a>.
 					</h1>
-					<p>This operation is irreversible. Do you want to continue?</p>
+					<p class="text-center">This operation is irreversible. Do you want to continue?</p>
 
 					<div class="m-auto mt-4 flex w-full justify-center gap-6">
 						<a
 							href={`/decks/${card.deck.id}`}
-							class="border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
+							class="w-10 text-center border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
 						>
 							No
 						</a>
@@ -38,7 +39,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 						<button
 							hx-delete={`/cards/${card.id}`}
 							hx-target="#deck-item"
-							class="border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
+							class="w-10 text-center border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
 						>
 							Yes
 						</button>
@@ -67,7 +68,6 @@ const plugin = new Elysia({ prefix: "/cards" })
 			}
 
 			await removeCard(card.id);
-
 			set.headers["HX-Redirect"] = `/decks/${card.deck.id}`
 		},
 		{
@@ -84,53 +84,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 			return
 		}
 
-		return (
-			<>
-				<h1 class="text-xl mt-12">{card.back}</h1>
-
-				<div class="m-auto flex w-full justify-center gap-6 absolute bottom-12">
-					<button
-						hx-post={`/cards/${card.id}/review`}
-						hx-vals='{"grade": "NOTHING"}'
-						class="w-fit border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
-					>
-						Nothing
-					</button>
-
-					<button
-						hx-post={`/cards/${card.id}/review`}
-						hx-vals='{"grade": "SOMETHING"}'
-						class="w-fit border-2 border-orange-500 rounded-md text-orange-500 px-1 hover:bg-orange-500 hover:text-white transition"
-					>
-						Something
-					</button>
-
-					<a
-						hx-post={`/cards/${card.id}/review`}
-						hx-vals='{"grade": "HARD"}'
-						class="w-fit border-2 border-blue-500 rounded-md text-blue-500 px-1 hover:bg-blue-500 hover:text-white transition"
-					>
-						Hard
-					</a>
-
-					<a
-						hx-post={`/cards/${card.id}/review`}
-						hx-vals='{"grade": "GOOD"}'
-						class="w-fit border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
-					>
-						Good
-					</a>
-
-					<a
-						hx-post={`/cards/${card.id}/review`}
-						hx-vals='{"grade": "EASY"}'
-						class="w-fit border-2 border-purple-500 rounded-md text-purple-500 px-1 hover:bg-purple-500 hover:text-white transition"
-					>
-						Easy
-					</a>
-				</div>
-			</>
-		)
+		return <CardReveal card={card} />
 	}, {
 		params: t.Object({
 			id: t.Numeric({ minimum: 0 })
@@ -149,7 +103,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 		set.headers['HX-Redirect'] = `/decks/${card.deck.id}/review`
 	}, {
 		body: t.Object({
-			grade: t.Union([t.Literal('NOTHING'), t.Literal('SOMETHING'), t.Literal('HARD'), t.Literal('GOOD'), t.Literal('EASY')])
+			grade: t.Union([t.Literal('NOTHING'), t.Literal('HARD'), t.Literal('GOOD'), t.Literal('EASY')])
 		}),
 
 		params: t.Object({

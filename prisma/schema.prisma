@@ -38,20 +38,22 @@ model Key {
 }
 
 model Deck {
-    id         Int        @id @default(autoincrement())
+    id         Int          @id @default(autoincrement())
     name       String
-    owner      User       @relation(fields: [owner_id], references: [id])
+    owner      User         @relation(fields: [owner_id], references: [id])
     owner_id   String
     cards      Card[]
-    created_at DateTime   @default(now())
-    visibility Visibility @default(PRIVATE)
+    created_at DateTime     @default(now())
+    visibility Visibilities @default(PRIVATE)
 
     @@unique([name, owner_id])
 }
 
-enum Visibility {
+enum Visibilities {
     PRIVATE
     PUBLIC
+
+    @@map("Visibility")
 }
 
 model Card {
@@ -64,21 +66,20 @@ model Card {
     retention_level Int      @default(0)
 }
 
-model GradeRetention {
-    id              Int   @id @default(autoincrement())
-    name            Grade @unique
+model Grade {
+    id              Int    @id @default(autoincrement())
+    name            Grades @unique
     retention_delta Int
 }
 
-enum Grade {
+enum Grades {
     NOTHING
-    SOMETHING
     HARD
     GOOD
     EASY
 }
 
-model RetentionDuration {
+model RetentionLevel {
     level         Int @id
     minutes_delta Int
 }

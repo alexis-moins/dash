@@ -5,6 +5,7 @@ interface IProps {
 const CardAddForm = ({ deckId }: IProps) => (
 	<form
 		hx-ext="response-targets"
+		hx-swap="outerHTML"
 		hx-target-4xx="#form-error"
 		hx-target-5xx="#form-error"
 		hx-post={`/decks/${deckId}/add`}
