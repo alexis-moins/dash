@@ -21,16 +21,16 @@ const plugin = new Elysia({ prefix: "/cards" })
 
 			return (
 				<>
-					<h1>
+					<h1 class="font-semibold text-center">
 						You're about to remove a card from{" "}
-						<span class="text-blue-500">{card.deck.name}</span>.
+						<a href={`/decks/${card.deck.id}`} class="text-blue-500 border-b-2 border-blue-200 hover:border-blue-500">{card.deck.name}</a>.
 					</h1>
 					<p>This operation is irreversible. Do you want to continue?</p>
 
-					<div class="m-auto flex w-full justify-around">
+					<div class="m-auto mt-4 flex w-full justify-center gap-6">
 						<a
 							href={`/decks/${card.deck.id}`}
-							class="w-fit m-auto border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
+							class="border-2 border-red-500 rounded-md text-red-500 px-1 hover:bg-red-500 hover:text-white transition"
 						>
 							No
 						</a>
@@ -38,7 +38,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 						<button
 							hx-delete={`/cards/${card.id}`}
 							hx-target="#deck-item"
-							class="w-fit m-auto border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
+							class="border-2 border-green-500 rounded-md text-green-500 px-1 hover:bg-green-500 hover:text-white transition"
 						>
 							Yes
 						</button>
@@ -55,7 +55,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 
 	.delete(
 		"/:id",
-		async ({ session, params }) => {
+		async ({ session, params, set }) => {
 			const card = await findCardById(params.id);
 
 			if (!card) {
@@ -68,12 +68,7 @@ const plugin = new Elysia({ prefix: "/cards" })
 
 			await removeCard(card.id);
 
-			return (
-				<>
-					<h1>The card has been deleted!</h1>
-					<a href={`/decks/${card.deck.id}`}>Back</a>
-				</>
-			);
+			set.headers["HX-Redirect"] = `/decks/${card.deck.id}`
 		},
 		{
 			params: t.Object({
