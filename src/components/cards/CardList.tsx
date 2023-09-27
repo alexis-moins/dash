@@ -29,8 +29,6 @@ const CardList = ({ cards, deckId }: IProps) => (
 
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
 								<button
-									hx-delete={`/cards/${card.id}/confirm`}
-									hx-target="#deck-item"
 									class="w-fit m-auto"
 								>
 									<svg
@@ -51,26 +49,28 @@ const CardList = ({ cards, deckId }: IProps) => (
 							</td>
 
 							<td class="border-b-2 group-first/row:border-y-2 py-4 pr-2">
-								<a href={`/decks/${card.id}`} class="w-fit m-auto">
-									<button class="px-2 text-center">
-										<svg
-											class="stroke-red-500 h-6  icon icon-tabler icon-tabler-trash"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 24 24"
-											stroke-width="1.5"
-											fill="none"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										>
-											<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-											<path d="M4 7l16 0" />
-											<path d="M10 11l0 6" />
-											<path d="M14 11l0 6" />
-											<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-											<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-										</svg>
-									</button>
-								</a>
+								<button
+									hx-delete={`/cards/${card.id}/confirm`}
+									hx-target="#deck-item"
+									class="w-fit m-auto"
+								>
+									<svg
+										class="stroke-red-500 h-6  icon icon-tabler icon-tabler-trash"
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path d="M4 7l16 0" />
+										<path d="M10 11l0 6" />
+										<path d="M14 11l0 6" />
+										<path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+										<path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+									</svg>
+								</button>
 							</td>
 						</tr>
 					))}

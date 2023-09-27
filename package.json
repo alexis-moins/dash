@@ -5,6 +5,9 @@
     "format": "bun x biome format --write .",
     "dev": "bun run --watch src/index.tsx"
   },
+  "prisma": {
+    "seed": "bun run prisma/seed.ts"
+  },
   "dependencies": {
     "@elysiajs/html": "^0.6.6",
     "@kitajs/html": "^2.2.2",
