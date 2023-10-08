@@ -37,7 +37,7 @@ Install the dependencies using bun
 bun install
 ```
 
-Create a .env file from the .env.local file
+Create a .env file from the [.env.local](./.env.local) file
 ```bash
 cp .env.local .env
 ```
